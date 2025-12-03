@@ -54,7 +54,7 @@ Run every 15 minutes:
 ## Remote File (irtrans .rem file)
 
 This suite uses an [IRTrans](http://www.irtrans.de/en) `.rem` remote profile to control the moon lamp.  
-All `.rem` files, including the `VGAzerMoonLamp.rem` file required for this project, are maintained in a dedicated repository:
+All `.rem` files, including the [`VGAzerMoonLamp.rem`](https://github.com/ArnieSkyNet/IRTrans-Remotes) file required for this project, are maintained in a dedicated repository:
 
 **IRTrans-Remotes**  
 [https://github.com/ArnieSkyNet/IRTrans-Remotes](https://github.com/ArnieSkyNet/IRTrans-Remotes)
