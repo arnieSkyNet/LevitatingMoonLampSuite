@@ -51,6 +51,15 @@ Run every 15 minutes:
 - Logs include timestamp and script version for easy tracking
 - Example log line format: `[19:36:49 randommoon.sh v0.01] EXEC: /home/pi/sbin/irclient arnie VGAzerMoonLamp purple`
 
+## Remote File (irtrans .rem file)
+
+This suite uses an [IRTrans](http://www.irtrans.de/en) `.rem` remote profile to control the moon lamp.  
+All `.rem` files, including the `VGAzerMoonLamp.rem` file required for this project, are maintained in a dedicated repository:
+
+**IRTrans-Remotes**  
+[https://github.com/ArnieSkyNet/IRTrans-Remotes](https://github.com/ArnieSkyNet/IRTrans-Remotes)
+ 
+
 ## Future Enhancements
 
 - Integration with lunar cycles for Full Moon overrides
