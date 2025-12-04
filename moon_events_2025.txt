@@ -1,0 +1,13 @@
+# Moon Events File for Levitating Moon Lamp
+# Format: MM-DD COLOUR PHASE_DESCRIPTION
+#   MM-DD            = month-day of the event
+#   COLOUR           = lamp colour to set on this day
+#   PHASE_DESCRIPTION= optional text describing the lunar event
+
+03-07 crimson Blood Moon
+08-09 royalblue Blue Moon
+10-07 white Supermoon
+11-05 white Supermoon
+03-14 mauve Micromoon
+04-13 mauve Micromoon
+
