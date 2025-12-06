@@ -105,3 +105,4 @@ All `.rem` files, including [`VGAzerMoonLamp.rem`](https://github.com/ArnieSkyNe
 
 - Manual overrides (`--colour` / `--color`), resets (`--reset` / `-r`), and custom IR commands (`--command` / `-c`) are supported in both scripts.
 - `moonphase.sh` reads the per-year events file; if the current year file does not exist, it copies the previous years file and logs a warning for the user to update.
+
