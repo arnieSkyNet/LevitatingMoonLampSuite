@@ -18,10 +18,16 @@ Control and automate your levitating moon lamp with this suite of scripts. Featu
 - Dry-run mode for testing without sending commands
 - Cron-compatible for automated scheduling
 - Portable for Raspberry Pi and adaptable to Windows systems
+- Continuous run mode with fixed (`--delay`) or randomised (`--random`) intervals
+- Per-year moon events data files (user-editable, default location `~/Documents/`)
+- Automatic fallback when yearly moon events file is missing
+- Reset command to return lamp to a known OFF state
+- Moon phase and special lunar events are read from a per-year external data file
+- Current script version: v0.02
 
 ## Included Scripts
 
-- **randommoon.sh**: Randomly sets the VGAzer Moon Lamp colours and brightness. Supports manual colour override, reset, and custom commands.
+- **randommoon.sh**: Randomly sets the VGAzer Moon Lamp colours and brightness. Supports manual colour override, reset, custom commands, continuous run, and randomised delay intervals.
 - **moonphase.sh**: Controls the VGAzer Moon Lamp based on lunar phases and per-year moon events. Supports night-only operation (18:0006:59 UK time), manual colour override, reset, and custom IR commands.
 - **Moon Events File**: `moon_events_<YEAR>.txt` stored in `~/Documents/` by default. Specify special moon events such as Blood Moon, Supermoon, Micromoon, and seasonal full moons with associated colours.
 
@@ -54,16 +60,31 @@ Run the scripts directly:
     ./moonphase.sh --command flash # Send custom IR command
     ./randommoon.sh --help        # Display help
 
+### Optional parameters for continuous or random execution:
+
+- `--delay <Ns|Nm|Nh>`  run continuously, repeating every fixed interval
+- `--random <Ns|Nm|Nh>`  run continuously, sleeping a random amount of time up to the specified limit between executions
+- `--reset` or `-r`  immediately sends OFF to reset the lamp to its default state
+- `--colour <color>` / `--color <color>`  manual colour override
+- `--command <cmd>` / `-c <cmd>`  send custom IR command
+- `--dry-run`  show commands without sending
+- `--help`  display help
+
+**Notes:**
+
+- `--random` works even if `--delay` is not provided, so scripts can be cron-safe or continuous.
+- `moonphase.sh` only runs during night hours (18:0006:59 UK time) and reads per-year moon events; if the current years file is missing, the previous year is copied and used, with a log warning.
+
 ## Cron Job Example
 
 Run `randommoon.sh` every 15 minutes between 07:0017:00:
 
-    */15 7-17 * * * /home/pi/LevitatingMoonLampSuite/randommoon.sh
+    */15 7-17 * * * /home/pi/sbin/randommoon.sh
 
 Run `moonphase.sh` nightly between 18:0006:59:
 
-    0 18 * * * /home/pi/LevitatingMoonLampSuite/moonphase.sh
-    0 0-6 * * * /home/pi/LevitatingMoonLampSuite/moonphase.sh
+    0 18 * * * /home/pi/sbin/moonphase.sh
+    0 0-6 * * * /home/pi/sbin/moonphase.sh
 
 ## Logging
 
@@ -84,4 +105,3 @@ All `.rem` files, including [`VGAzerMoonLamp.rem`](https://github.com/ArnieSkyNe
 
 - Manual overrides (`--colour` / `--color`), resets (`--reset` / `-r`), and custom IR commands (`--command` / `-c`) are supported in both scripts.
 - `moonphase.sh` reads the per-year events file; if the current year file does not exist, it copies the previous years file and logs a warning for the user to update.
-
