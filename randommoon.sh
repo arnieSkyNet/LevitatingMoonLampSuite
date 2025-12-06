@@ -6,7 +6,7 @@
 # Features: random colour, brightness, power actions, odd/even minute skipping, persistent state
 # New (v0.02): --delay/-d (loop), --random/-r (random window), combined behaviour
 # CLI options: --nolog, --log <file>, --dry-run, --delay <N[s|m|h]>, --random <N[s|m|h]>, --help
-
+ 
 VER="0.02"
 SCRIPT_NAME=$(basename "$0")
 DEFAULT_LOG="/home/pi/log/arnie.log"
