@@ -13,7 +13,7 @@ Controls a VGAzer Moon Lamp via IRTrans on Windows. Supports:
 - Configurable IR client, host, and device
 
 .VERSION
-0.02
+0.02.1
 #>
 
 # -----------------------------
@@ -63,7 +63,7 @@ for ($i = 0; $i -lt $Args.Length; $i++) {
 function Log {
     param([string]$Message)
     $timestamp = Get-Date -Format "HH:mm:ss"
-    $line = "[$timestamp randommoon.ps1 v0.02] $Message"
+    $line = "[$timestamp randommoon.ps1 v0.02.1] $Message"
     if (-not $DRYRUN) {
         Add-Content -Path $LOGFILE -Value $line
     }
@@ -177,6 +177,12 @@ do {
 
     $colour = $newColour
 
+    # --- OVERRIDE LOGIC ---
+    if ($power -eq "off" -and $powerAction -eq "leave") {
+        $powerAction = "override"
+        Log "WARNING: State mismatch detected: lamp is OFF but action is 'leave'  forcing power ON"
+    }
+
     switch ($powerAction) {
         "off" {
             if ($power -eq "on") { Send-Cmd "off"; $power="off" }
@@ -194,12 +200,18 @@ do {
                 $brightness = $targetBrightness
             }
         }
+        "override" {
+            Log "POWER OVERRIDE: forcing ON to resync state"
+            Send-Cmd "on"; Start-Sleep 0.6; $power = "on"
+            Send-Cmd $colour
+            Apply-Brightness -from $brightness -to $targetBrightness
+            $brightness = $targetBrightness
+        }
     }
 
     Save-State
 
     if ($DELAY) {
-        # Convert delay string to seconds
         if ($DELAY -match "(\d+)([smh])") {
             $num = [int]$matches[1]
             switch ($matches[2]) {
@@ -224,4 +236,3 @@ do {
 } while ($DELAY -or $RANDOMMAX)
 
 Log "Random Moon run ended"
-
