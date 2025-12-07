@@ -72,6 +72,8 @@ Control and automate your levitating moon lamp with this suite of scripts. Featu
 
        Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
+Note: Ensure the irserver is running before running the scripts (irclient needs irserver). irserver is how irclient sends to the irTrans hardware.
+
 ## Usage
 
 ### Linux
