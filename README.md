@@ -45,8 +45,8 @@ Control and automate your levitating moon lamp with this suite of scripts. Featu
 
 1. Clone the repository:
 
-    git clone https://github.com/ArnieSkyNet/LevitatingMoonLampSuite.git
-    cd LevitatingMoonLampSuite
+-    git clone https://github.com/ArnieSkyNet/LevitatingMoonLampSuite.git
+-    cd LevitatingMoonLampSuite
 
 2. Edit the top of scripts to configure your IR client:
 
