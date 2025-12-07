@@ -1,0 +1,99 @@
+Usage: irserver [options] <device>
+
+The last argument for the irserver is always the device:
+Windows Devices: COM1 - COMn or USB for USB devices
+
+LINUX Devices: /dev/ttyS0 - /dev/ttySn or /dev/ttyUSB0 - /dev/ttyUSBn for USB devices
+-------------------------------------------------------------------------------------
+
+Description of the options:
+
+-baudrate <bd>  The baudrate to be used when communicating with RS232 devices.
+
+-no_reconnect   The server will not try to reconnect to a device once it
+                was removed. Standard is that the server tries to reconnect
+                when the device was removed when the server was running.
+                (USB only)
+
+-no_lirc        The LIRC compatible Server socket ist not started. That
+                allows to run LIRC on the same PC.
+
+-debug_code     All received IR codes are printed on the console. When the
+                code is found in the database the Remote/Command is printed,
+                too. The loglevel 4 has to be used to activated that output.
+
+-timestamp      Add a timestamp to every log message.
+
+-medialon       Make a hexdump of sent commands in a format for the Medialon SW.
+
+-hexdump        The server prints the complete communication between client
+                and server. This can be used to debug codes or to record
+                the communication to use the IRTrans with other systems.
+			   
+-xap            Start the integrated xap interface.
+
+-ip_relay       Relay IR Codes received from an Ethernet module to connected
+                USB, RS232 or bus modules.
+
+-hexfile <file> The server prints the complete communication between client
+                and server into <file>. This can be used to record the 
+                communication to use the IRTrans with other systems.
+
+-codedump       The IR Data of all command sent is printed to the console.
+                The loglevel 4 has to be used to activate the output.
+
+-stat_timeout	Sets the timeout (in s) after that the Cache for the device status
+                is reread from the devices.
+
+-learned_only   Only Codes that have been learned are transmitted to the
+                Network clients. NOTE: This option will become default
+                in later versions of the irserver.
+
+-logfile <file> Redirect the console/log output to a specified file.
+
+-loglevel <x>   Controls which information is logged. Standard is loglevel 1.
+                Possible values are 0-4. 0=Nothing is logged. 4=debug output.
+
+-netmask <mask> Access control for networked clients. When this option is used
+                at least once, only clients within the specified netmask are
+                allowed to access the Server. The format is ip/bits. That
+                means 192.168.12.0/24 defines a standard class C network.
+                This option can be used more then once to define different
+                networks. A single host can be defined with IP/32. The defined
+                netmasks are used for all IRTrans and LIRC clients.
+
+-udp_relay      Switches on the UDP Relay of received commands to custom servers.
+<host> <port>   <host> is name or IP-Adress of the remote server. <port> is
+<format>        the UDP port used for the relay. The format string defines the
+                format which is used to send the commands: %r will be replaced
+                with the Remote control; %c will be replaced with the command
+                and %a will be replaced with the IRTrans Device Adress. Static
+                strings can be added as needed.
+                NOTE: This option can be used to connect to remote servers that
+                do not know the IRTrans or LIRC protocol. They only need to be
+                able to receive definable UDP telegrams.
+
+-no_clock       Do not start the Clock on a connected Display module when the
+                irserver is shut down.
+
+-start_clock    Start the clock on a connected Display module when the irserver
+                is started.
+
+-lcd <type>     Defines the display type of a LCD display connected to the
+                serial bus: Type = 1: 20 x 4; Type = 2: 40 x 4
+
+-http_port <x>  Defines the TCP/IP port to be used for the integrated Webserver.
+                Only if this option is used the Webserver will be started !
+
+-pidfile <file> Write the PID of the irserver to the path/file
+
+-daemon         Starts the irserver as a LINUX Service. If no -logfile option
+                is present, irserver.log in the current directory is used.
+                THIS OPTION IS VALID FOR LINUX ONLY !
+
+-set_id <id>    Sets the device ID for a 2nd generation IRTrans module. This
+                option can be used to set the ID for the IRTrans module
+                connected directly to the server. It is only valid for the
+                2nd generation RS232/USB modules that no longer have a
+                DIP switch to set the ID.
+                THIS OPTION WILL NOT START THE SERVER. IT ONLY SETS THE ID!

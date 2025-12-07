@@ -1,0 +1,69 @@
+Arnie IRTrans Server
+
+[Windows PS Client] 
+        
+         .\randommoon.ps1 --colour <colour>
+         (talks to localhost)
+        ¼
+[Local IRTrans Server on Arnie]
+        
+         /usr/local/irtrans/irserver -timestamp -loglevel 4 
+         -netmask 192.168.1.0/24 -netmask 100.64.0.0/10 192.168.1.2
+        ¼
+[IRTrans Hardware Box]
+        
+         IP: 192.168.1.2
+         Executes IR codes to VGAzer Moon Lamp
+        ¼
+[Moon Lamp]
+
+
+"Service name: irtrans.service
+"Executable: /usr/local/irtrans/irserver
+"Working directory: /usr/local/irtrans
+"User: root
+"Restart policy: on-failure
+"Command for multiple allowed networks:
+/usr/local/irtrans/irserver -timestamp -loglevel 4 -netmask 192.168.1.0/24 -netmask 100.64.0.0/10 192.168.1.2
+"Reload & restart commands:
+sudo systemctl daemon-reload
+sudo systemctl restart irtrans
+sudo systemctl status irtrans
+
+;
+
+Windows PS Client (randommoon.ps1)
+"IR client path: C:\Program Files\IRTrans\IRClient.exe
+"Host: localhost (talks to Arnies IRTrans server)
+"Device: VGAzerMoonLamp
+"Version: 0.02.2 (with power override)
+"Example commands:
+.\randommoon.ps1 colour peach
+.\randommoon.ps1 delay 10s
+.\randommoon.ps1 random 5m
+"Logging: $env:USERPROFILE\Documents\MoonLamp.log
+"Override logic: Forces lamp ON if state mismatch detected.
+
+;
+
+Windows Network Priorities
+"Interface Metric order (IPv4):
+
+1.Ethernet: 10
+2.WiFi: 20
+3.VMware/virtual: 35
+4.Bluetooth: 65
+5.Tailscale: 90
+
+"Check metrics: Get-NetIPInterface | Sort-Object InterfaceMetric | Format-Table InterfaceAlias, AddressFamily, InterfaceMetric
+"Ping test: ping arnie
+
+;
+
+Notes
+"IRTrans server now handles both local network and Tailscale-like networks via multiple -netmask entries.
+"Windows client talks to localhost to bypass routing issues.
+"Service restart logic and PS script power override ensure no more lamp off but action leave scenarios.
+"Logging enabled on both ends for debugging.
+
+
