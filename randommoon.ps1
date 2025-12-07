@@ -13,7 +13,7 @@ Controls a VGAzer Moon Lamp via IRTrans on Windows. Supports:
 - Configurable IR client, host, and device
 
 .VERSION
-0.02.1
+0.02.2
 #>
 
 # -----------------------------
@@ -37,10 +37,6 @@ $COMMAND = $null
 # -----------------------------
 # Parse command-line arguments
 # -----------------------------
-param(
-    [string[]]$Args
-)
-
 for ($i = 0; $i -lt $Args.Length; $i++) {
     switch ($Args[$i].ToLower()) {
         "--dry-run" { $DRYRUN = $true }
@@ -48,12 +44,12 @@ for ($i = 0; $i -lt $Args.Length; $i++) {
         "--random"  { $RANDOMMAX = $Args[$i+1]; $i++ }
         "--colour"  { $COLOUR = $Args[$i+1]; $i++ }
         "--color"   { $COLOUR = $Args[$i+1]; $i++ }
-        "--reset" { $RESET = $true }
-        "-r" { $RESET = $true }
+        "--reset"   { $RESET = $true }
+        "-r"        { $RESET = $true }
         "--command" { $COMMAND = $Args[$i+1]; $i++ }
-        "-c" { $COMMAND = $Args[$i+1]; $i++ }
-        "--help" { Write-Host "Usage: randommoon.ps1 [--dry-run] [--delay <Ns|Nm|Nh>] [--random <Ns|Nm|Nh>] [--colour <color>] [--reset] [--command <cmd>]"; exit }
-        default { Write-Host "Unknown option: $($Args[$i])"; exit 1 }
+        "-c"        { $COMMAND = $Args[$i+1]; $i++ }
+        "--help"    { Write-Host "Usage: randommoon.ps1 [--dry-run] [--delay <Ns|Nm|Nh>] [--random <Ns|Nm|Nh>] [--colour <color>] [--reset] [--command <cmd>]"; exit }
+        default     { Write-Host "Unknown option: $($Args[$i])"; exit 1 }
     }
 }
 
@@ -63,10 +59,8 @@ for ($i = 0; $i -lt $Args.Length; $i++) {
 function Log {
     param([string]$Message)
     $timestamp = Get-Date -Format "HH:mm:ss"
-    $line = "[$timestamp randommoon.ps1 v0.02.1] $Message"
-    if (-not $DRYRUN) {
-        Add-Content -Path $LOGFILE -Value $line
-    }
+    $line = "[$timestamp randommoon.ps1 v0.02.2] $Message"
+    if (-not $DRYRUN) { Add-Content -Path $LOGFILE -Value $line }
     Write-Host $line
 }
 
