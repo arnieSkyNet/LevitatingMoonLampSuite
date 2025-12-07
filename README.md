@@ -4,7 +4,7 @@
 ![Bash](https://img.shields.io/badge/language-Bash-yellow)
 ![PowerShell](https://img.shields.io/badge/language-PowerShell-blue)
 ![Last Commit](https://img.shields.io/github/last-commit/ArnieSkyNet/LevitatingMoonLampSuite)
-![Platform](https://img.shields.io/badge/platform-RaspberryPi%2C-Windows-blue)
+![Windows](https://img.shields.io/badge/Windows-0.02.2-blue)
 ![Infrared](https://img.shields.io/badge/IR-IRTrans-orange)
 
 Control and automate your levitating moon lamp with this suite of scripts. Features include randomised colour and brightness changes, power control, moon phase awareness via `moonphase.sh` (Linux) or `moonphase.ps1` (Windows), persistent state between runs, and fully configurable IR client settings. Cron-compatible on Linux (Raspberry Pi) and adaptable for Windows environments.
