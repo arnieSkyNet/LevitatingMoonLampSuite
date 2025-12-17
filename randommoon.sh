@@ -7,7 +7,7 @@
 # New (v0.02.1): Bugfix for array loop (Bash 3.2 compatibility), --delay/-d, --random/-r, combined behaviour
 # CLI options: --nolog, --log <file>, --dry-run, --delay <N[s|m|h]>, --random <N[s|m|h]>, --help
 
-VER="0.02.1"
+VER="0.02.3"
 SCRIPT_NAME=$(basename "$0")
 DEFAULT_LOG="/home/pi/log/arnie.log"
 
@@ -17,6 +17,14 @@ DEFAULT_LOG="/home/pi/log/arnie.log"
 IRCLIENT="/home/pi/sbin/irclient"
 IR_HOST="arnie"
 IR_DEVICE="VGAzerMoonLamp"
+
+# -----------------------------
+# User-configurable parameters
+# -----------------------------
+COLORS=(white red orange pink peach yellow green bluegreen skyblue beachblue seablue royalblue mauve purple crimson lilac)
+DIMDELAY=8.4
+BRIGHT_MIN=0
+BRIGHT_MAX=3
 
 # -----------------------------
 # CLI option defaults
@@ -125,10 +133,6 @@ run_logic() {
     STATEFILE="$HOME/.moonlamp_state"
     LOCKFILE="/tmp/randommoon.lock"
 
-    COLORS=(white red orange pink peach yellow green bluegreen skyblue beachblue seablue royalblue mauve purple crimson lilac)
-    BRIGHT_MIN=0
-    BRIGHT_MAX=4
-
     exec 200>"$LOCKFILE"
     flock -n 200 || { log_msg "Another instance running; exiting run_logic."; return; }
 
@@ -144,9 +148,9 @@ run_logic() {
         local from=$1 to=$2
         [[ "$from" -eq "$to" ]] && { log_msg "Brightness already at $from"; return; }
         if [[ "$from" -lt "$to" ]]; then
-            for i in $(seq 1 $((to-from))); do send_cmd "brighter"; sleep 0.4; done
+            for i in $(seq 1 $((to-from))); do send_cmd "brighter"; sleep "$DIMDELAY"; done
         else
-            for i in $(seq 1 $((from-to))); do send_cmd "dim"; sleep 0.4; done
+            for i in $(seq 1 $((from-to))); do send_cmd "dim"; sleep "$DIMDELAY"; done
         fi
     }
 
@@ -211,7 +215,7 @@ run_logic() {
             save_state
             ;;
         on)
-            [[ "$power" = "off" ]] && send_cmd "on" && sleep 0.6 && power="on"
+            [[ "$power" = "off" ]] && send_cmd "on" && sleep "$DIMDELAY" && power="on"
             send_cmd "$colour"
             apply_brightness_steps "$brightness" "$target_brightness"
             brightness=$target_brightness
@@ -223,7 +227,7 @@ run_logic() {
             ;;
         override)
             log_warn "POWER OVERRIDE: forcing ON to resync state"
-            send_cmd "on"; sleep 0.6; power="on"
+            send_cmd "on"; sleep "$DIMDELAY"; power="on"
             send_cmd "$colour"; apply_brightness_steps "$brightness" "$target_brightness"; brightness=$target_brightness
             save_state
             ;;
